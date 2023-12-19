@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 export default function Layout() {
   return (
     <main>
+      <div className="gradient"></div>
       <Header />
       <Outlet />
       <Footer />

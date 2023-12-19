@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function About() {
   return (
-    <section className="text-xl max-[768px]:text-lg max-[640px]:text-base min-h-[80vh] p-5 mt-16 flex flex-col items-center">
+    <section className="text-xl max-[768px]:text-lg max-[640px]:text-base min-h-[85vh] p-5 mt-16 flex flex-col items-center">
       <h1 className="font-semibold text-3xl max-[640px]:text-2xl mb-3">
         About Us
       </h1>
