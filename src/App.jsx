@@ -1,10 +1,21 @@
-import Header from './components/Header'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import EmployeeLogin from "./authentication/EmployeeLogin";
+import AdminLogin from "./authentication/AdminLogin";
 
 export default function App() {
   return (
-    <div>
-      <Header />
-      <h1 className='text-3xl text-red-700 mt-20 px-5'>Employee Management System!</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />}/>
+          <Route path="/about" element={<About />}/>
+          <Route path="/employee-login" element={<EmployeeLogin />}/>
+          <Route path="/admin-login" element={<AdminLogin />}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 };
