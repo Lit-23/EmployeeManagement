@@ -16,14 +16,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import DashboardIcon from '@mui/icons-material/DashboardCustomizeOutlined';
-import AddIcon from '@mui/icons-material/CreateNewFolderOutlined';
-import EmployeeListIcon from '@mui/icons-material/FolderSharedOutlined';
-
 import Profile from './Profile';
 import { Link, Outlet } from 'react-router-dom';
+
+// MUI ICONS
+import {
+  DashboardIcon,
+  ProfileIcon,
+  AddIcon,
+  EmployeeListIcon,
+  SettingsIcon,
+  LogoutIcon,
+} from '../mui components/index';
 
 const drawerWidth = 240;
 
@@ -133,44 +137,74 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '12px', fontSize: '15px'}}>MAIN</Typography>
         <List>
-          <ListItem key='Dashboard' disablePadding>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: '#2e7d32' }}>
-                <DashboardIcon/>
-              </ListItemIcon>
-              <ListItemText primary='Dashboard'/>
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          {['Add Employee', 'Employee List', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon sx={{ color: '#2e7d32' }}>
-                  { index === 0 && <AddIcon /> }
-                  { index === 1 && <EmployeeListIcon />}
-                  { index === 2 && <AddIcon /> }
-                  { index === 3 && <AddIcon /> }
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+          <Link to='/dashboard'>
+            <ListItem key='Dashboard' disablePadding>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: '#2e7d32' }}>
+                    <DashboardIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary='Dashboard'/>
+                </ListItemButton>
             </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon sx={{ color: '#2e7d32' }}>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+          </Link>
+          <Link to='/admin-profile'>
+            <ListItem key='Profile' disablePadding>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: '#2e7d32' }}>
+                    <ProfileIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='My Profile'/>
+                </ListItemButton>
             </ListItem>
-          ))}
+          </Link>
+        </List>
+        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '5px', fontSize: '15px'}}>LISTS</Typography>
+        <List>
+          <Link to='/add-employee'>
+            <ListItem key='Add Employee' disablePadding>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: '#2e7d32' }}>
+                    <AddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Add Employee'/>
+                </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/employee-list'>
+            <ListItem key='Employee List' disablePadding>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: '#2e7d32' }}>
+                    <EmployeeListIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Employee List'/>
+                </ListItemButton>
+            </ListItem>
+          </Link>
+        </List>
+        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '5px', fontSize: '15px'}}>SETTINGS</Typography>
+        <List>
+          <Link to='/settings'>
+            <ListItem key='Settings' disablePadding>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: '#2e7d32' }}>
+                    <SettingsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Settings'/>
+                </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to='/employee-login'>
+            <ListItem key='Logout' disablePadding>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: '#2e7d32' }}>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Logout'/>
+                </ListItemButton>
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
       <Main open={open}>
