@@ -7,7 +7,6 @@ import AdminLogin from "./authentication/AdminLogin";
 import Dashboard from "./pages/Dashboard";
 import AddEmployee from "./pages/AddEmployee";
 import EmployeeList from "./pages/EmployeeList";
-import AdminProfile from "./pages/AdminProfile";
 import EmployeeProfile from "./pages/EmployeeProfile";
 import Settings from "./pages/Settings";
 
@@ -22,8 +21,7 @@ export default function App() {
         
         <Route path="/" element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin-profile" element={<AdminProfile />} />
-          <Route path="/employee-profile" element={<EmployeeProfile />} />
+          <Route path="/profile" element={<EmployeeProfile />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/employee-list" element={<EmployeeList />} />
           <Route path="/settings" element={<Settings />} />

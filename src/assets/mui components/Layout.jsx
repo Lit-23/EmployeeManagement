@@ -149,7 +149,7 @@ export default function PersistentDrawerLeft() {
                 </ListItemButton>
             </ListItem>
           </Link>
-          <Link to='/admin-profile'>
+          <Link to='/profile'>
             <ListItem key='Profile' disablePadding>
                 <ListItemButton>
                   <ListItemIcon sx={{ color: '#2e7d32' }}>
