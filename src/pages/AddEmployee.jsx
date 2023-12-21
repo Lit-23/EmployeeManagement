@@ -85,6 +85,7 @@ export default function AddEmployee() {
             label="Email" 
             variant="standard" 
             color="success"
+            helperText="This will be the employees default email in the portal!"
           />
           <TextField 
             id="number" 

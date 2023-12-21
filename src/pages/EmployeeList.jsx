@@ -1,7 +1,9 @@
-import React from 'react'
+import CustomizedTables from '../assets/mui components/Table'
 
 export default function EmployeeList() {
   return (
-    <div>EmployeeList</div>
+    <div>
+      <CustomizedTables />
+    </div>
   )
 }
