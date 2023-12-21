@@ -6,7 +6,8 @@ import Button from '@mui/material/Button';
 export default function AdminLogin() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    navigate('/dashboard');
   };
 
   return (
