@@ -14,7 +14,7 @@ const employeeSchema = new mongoose.Schema({
     required: true,
   },
   birthDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   gender: {
@@ -31,17 +31,20 @@ const employeeSchema = new mongoose.Schema({
     unique: true,
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
-  // password is the company ID
-  password: {
+  ID: {
     type: String,
     required: true,
     unique: true,
   },
+  password: {
+    type: String,
+    required: false,
+  },
   designation: {
-    type: Number,
+    type: String,
     required: true,
   },
 }, {timestamps: true});

@@ -16,7 +16,7 @@ export const addEmployee = async (req, res, next) => {
     address,
     email,
     phoneNumber,
-    password,
+    ID,
     designation,
   } = req.body;
   const newEmployee = new Employee({ 
@@ -28,13 +28,14 @@ export const addEmployee = async (req, res, next) => {
     address,
     email,
     phoneNumber,
-    password,
+    ID,
+    password: ID,
     designation,
   });
   try {
     await newEmployee.save();
     res.status(201).json({ message: 'Employee added successfully!' });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
