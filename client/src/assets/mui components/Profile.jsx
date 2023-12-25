@@ -6,7 +6,11 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
+
+// imports for signout functionality
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signout } from '../../store/employeeSlice/employeeSlice.js';
 
 export default function Profile() {
   const [open, setOpen] = useState(true);
@@ -42,10 +46,17 @@ export default function Profile() {
     prevOpen.current = open;
   }, [open]);
 
-  // Logout
+  // signout functionality
   const navigate = useNavigate();
-  const handleLogout = () => {
-    navigate('/employee-login');
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/employee/signout');
+      dispatch(signout());
+      navigate('/employee-login');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

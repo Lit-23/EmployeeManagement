@@ -8,10 +8,6 @@ export default function Header() {
   const [isEmployee, setIsEmployee] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const handleTab = (e) => {
-    console.log(`isHome ${isHome}`)
-    console.log(`isAbout ${isAbout}`)
-    console.log(`isEmployee ${isEmployee}`)
-    console.log(`isAdmin ${isAdmin}`)
     if(e.target.id === 'home') {
       setIsHome(true);
       setIsAbout(false);

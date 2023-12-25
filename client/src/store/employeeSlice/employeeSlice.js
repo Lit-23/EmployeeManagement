@@ -41,6 +41,12 @@ export const employeeSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    signout: (state) => {
+      state.currentEmployee = null;
+      state.admin = true;
+      state.loading = false;
+      state.error = false;
+    },
   },
 });
 
@@ -51,6 +57,7 @@ export const {
   signinStart, 
   signinSuccess,
   signinFailure,
+  signout,
 } = employeeSlice.actions
 
 export default employeeSlice.reducer

@@ -31,6 +31,11 @@ import {
 
 import { useSelector }  from "react-redux";
 
+// imports for signout functionality
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signout } from '../../store/employeeSlice/employeeSlice.js';
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -79,8 +84,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
-  const { admin } = useSelector((state) => state.employee);
-  console.log(admin)
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
@@ -90,6 +93,22 @@ export default function PersistentDrawerLeft() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  // for conditional rendering when admin === true || admin === false
+  const { admin } = useSelector((state) => state.employee);
+
+  // signout functionality
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/employee/sign-out');
+      dispatch(signout());
+      navigate('/employee-login');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -206,7 +225,7 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           </Link>
           <Link to='/employee-login'>
-            <ListItem key='Logout' disablePadding>
+            <ListItem key='Logout' disablePadding onClick={handleLogout}>
                 <ListItemButton>
                   <ListItemIcon sx={{ color: '#2e7d32' }}>
                     <LogoutIcon />
