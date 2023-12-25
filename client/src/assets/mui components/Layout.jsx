@@ -29,6 +29,8 @@ import {
   LogoutIcon,
 } from '../mui components/index';
 
+import { useSelector }  from "react-redux";
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -77,6 +79,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
+  const { admin } = useSelector((state) => state.employee);
+  console.log(admin)
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
@@ -149,29 +153,35 @@ export default function PersistentDrawerLeft() {
                 </ListItemButton>
             </ListItem>
           </Link>
-          <Link to='/profile'>
-            <ListItem key='Profile' disablePadding>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: '#2e7d32' }}>
-                    <ProfileIcon />
-                  </ListItemIcon>
-                  <ListItemText primary='My Profile'/>
-                </ListItemButton>
-            </ListItem>
-          </Link>
+          {
+            !admin &&
+            <Link to='/profile'>
+              <ListItem key='Profile' disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: '#2e7d32' }}>
+                      <ProfileIcon />
+                    </ListItemIcon>
+                    <ListItemText primary='My Profile'/>
+                  </ListItemButton>
+              </ListItem>
+            </Link>
+          }
         </List>
         <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '5px', fontSize: '15px'}}>LISTS</Typography>
         <List>
-          <Link to='/add-employee'>
-            <ListItem key='Add Employee' disablePadding>
+          {
+            admin &&
+            <Link to='/add-employee'>
+              <ListItem key='Add Employee' disablePadding>
                 <ListItemButton>
                   <ListItemIcon sx={{ color: '#2e7d32' }}>
                     <AddIcon />
                   </ListItemIcon>
                   <ListItemText primary='Add Employee'/>
                 </ListItemButton>
-            </ListItem>
-          </Link>
+              </ListItem>
+            </Link>
+          }
           <Link to='/employee-list'>
             <ListItem key='Employee List' disablePadding>
                 <ListItemButton>

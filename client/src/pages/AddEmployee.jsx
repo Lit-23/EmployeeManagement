@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmployeeStart, addEmployeeSuccess, addEmployeeFailure } from "../../store/employeeSlice/employeeSlice.js";
+import { addEmployeeStart, addEmployeeSuccess, addEmployeeFailure } from "../store/employeeSlice/employeeSlice.js";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import BasicSelect from "../assets/mui components/selectItem.jsx";
@@ -29,9 +29,11 @@ export default function AddEmployee() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     try {
+      // addEmployee start
       dispatch(addEmployeeStart());
+
+      // fetch to send the data from api/server
       const res = await fetch('/api/employee/add-employee', {
         method: 'POST',
         headers: {
@@ -40,11 +42,13 @@ export default function AddEmployee() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+
       // add employee fail
       if(data.success === false) {
         dispatch(addEmployeeFailure(data));
         return;
       };
+
       // add employee success
       dispatch(addEmployeeSuccess(data));
     } catch (error) {
