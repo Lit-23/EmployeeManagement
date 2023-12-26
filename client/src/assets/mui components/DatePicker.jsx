@@ -14,7 +14,7 @@ export default function BasicDatePicker({ id, formData, setFormData }) {
   
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DemoContainer sx={{ marginTop: -1 }} components={['DatePicker']}>
+      <DemoContainer sx={{ marginTop: -1, flex: 1 }} components={['DatePicker']}>
         <DatePicker 
           label="Birthdate" 
           value={value} 
