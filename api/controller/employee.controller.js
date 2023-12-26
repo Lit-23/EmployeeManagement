@@ -74,6 +74,43 @@ export const signin = async (req, res, next) => {
   }
 };
 
+// update employee
+export const updateEmployee = async (req, res, next) => {
+  if(req.employee.id !== req.params.id) {
+    return next(errorHandler(401, "You can update only your account!"));
+  }
+  try {
+    // if there is a new password, it will be hashed first before saving to the database
+    if (req.body.password) {
+      req.body.password = bcryptjs.hashSync(req.body.password, 10);
+    }
+
+    const updatedEmployee = await Employee.findByIdAndUpdate(req.params.id, {
+      $set: {
+          profilePicture: req.body.profilePicture,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          birthDate: req.body.birthDate,
+          gender: req.body.gender,
+          address: req.body.address,
+          email: req.body.email,
+          phoneNumber: req.body.phoneNumber,
+          ID: req.body.ID,
+          password: req.body.password,
+          designation: req.body.designation
+        }
+      },
+      { new: true }     
+    );
+
+    // separate the password and send the data to the client side except password
+    const { password, ...rest } = updatedEmployee._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const signout = async (req, res) => {
   res.clearCookie('access_token').status(200).json('Signout success!');
 };

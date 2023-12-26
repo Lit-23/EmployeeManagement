@@ -1,80 +1,153 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useSelector, useDispatch } from "react-redux";
+import { 
+  updateEmployeeStart,
+  updateEmployeeSuccess,
+  updateEmployeeFailure 
+} from "../store/employeeSlice/employeeSlice.js";
+
+// imports for firebase storage
+import { app } from "../firebase/firebaseConfig.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function EmployeeProfile() {
-  const fileRef = useRef(null);
+  const { currentEmployee } = useSelector(state => state.employee);
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({});
+  const [image, setImage] = useState(null);
+  const [imagePercent, setImagePercent] = useState(0);
+  const [imageError, setImageError] = useState(false);
+  const fileRef = useRef(null);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if(image) {
+      handleImageUpload(image);
+    }
+  }, [image])
+
+  const handleImageUpload = async () => {
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + image.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImagePercent(Math.round(progress));
+      }, 
+      (error) => {
+        setImageError(true)
+      }, 
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => setFormData({ ...formData, profilePicture: downloadURL}));
+      }
+    );
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      dispatch(updateEmployeeStart());
+      const res = await fetch(`/api/employee/update/${currentEmployee._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if(data.success === false) {
+        dispatch(updateEmployeeFailure(data));
+        alert('Something went wrong!');
+        return;
+      };
+      dispatch(updateEmployeeSuccess(data));
+      alert('Updated Successfully!');
+    } catch (error) {
+      dispatch(updateEmployeeSuccess(error));
+    };
   };
 
   return (
-    <section className="flex flex-col justify-center">
+    <section className="flex flex-col justify-center max-w-[600px] mx-auto">
       <h1 className="text-xl self-center">My Profile</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col mx-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col">
         <input 
           type="file" 
           ref={fileRef} 
           hidden 
           accept="image/*"
-          // onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e) => setImage(e.target.files[0])}
         />
         <img 
-          src='https://hwchamber.co.uk/wp-content/uploads/2022/04/avatar-placeholder.gif' 
+          src={formData.profilePicture || currentEmployee.profilePicture}
           alt="profile" 
-          className="h-24 w-24 self-center cursor-pointer rounded-full object-cover my-5"
+          className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mb-3"
           onClick={() => fileRef.current.click()}
         />
-        <div className="flex flex-col gap-4">
+        <p className="text-sm self-center">
+          {
+            imageError 
+              ? <span className="text-red-700">Error uploading image(file size must be less than 2MB)</span> 
+              : imagePercent > 0 && imagePercent < 100 
+                ? <span className="text-slate-700">
+                  {`Uploading: ${imagePercent}%`}
+                </span>
+                : imagePercent === 100
+                  ? <span className="text-green-700">Image uploaded successfully!</span>
+                  : ''
+          }
+        </p>
+        <div className="flex flex-col gap-4 mt-3">
           <div className="flex gap-5">
             <TextField 
-              id="first-name" 
+              id="firstName" 
               label="First Name" 
               variant="standard" 
               color="success"
-              defaultValue="Con"
               className="flex-1"
+              defaultValue={currentEmployee.firstName}
+              onChange={handleChange}
             />
             <TextField 
-              id="last-name" 
+              id="lastName" 
               label="Last Name" 
               variant="standard" 
               color="success"
-              defaultValue="Doriano"
               className="flex-1"
+              defaultValue={currentEmployee.lastName}
+              onChange={handleChange}
             />
           </div>
 
           <div className="flex gap-5">
             <TextField 
               id="birthdate" 
-              // type="date"
               label="Birthdate" 
               variant="standard" 
               color="success"
-              defaultValue="12/23/1998"
               className="flex-1"
+              defaultValue={currentEmployee.birthDate.slice(0, 10)}
+              onChange={handleChange}
             />
 
             <TextField
               id="gender"
-              select
               label="Gender"
-              defaultValue="MALE"
+              variant="standard" 
+              color="success"
               className="flex-1"
-              SelectProps={{
-                native: true
-              }}
-              variant="standard"
-            >
-              <option key='male' value='male'>
-                MALE
-              </option>
-              <option key='female' value='female'>
-                FEMALE
-              </option>
-            </TextField>
+              defaultValue={currentEmployee.gender}
+              onChange={handleChange}
+            />
           </div>
           
           <TextField 
@@ -82,7 +155,8 @@ export default function EmployeeProfile() {
             label="Address" 
             variant="standard" 
             color="success"
-            defaultValue="taga doon"
+            defaultValue={currentEmployee.address}
+            onChange={handleChange}
           />
           <TextField 
             id="email" 
@@ -90,7 +164,8 @@ export default function EmployeeProfile() {
             label="Email" 
             variant="standard" 
             color="success"
-            defaultValue="example@gmail.com"
+            defaultValue={currentEmployee.email}
+            onChange={handleChange}
           />
           <TextField 
             id="number" 
@@ -98,47 +173,51 @@ export default function EmployeeProfile() {
             label="Contact Number" 
             variant="standard" 
             color="success"
-            defaultValue="09123456781"
+            defaultValue={currentEmployee.phoneNumber}
+            onChange={handleChange}
           />
           <TextField 
-            id="id" 
+            disabled
+            id="ID" 
             label="Company ID" 
             variant="standard" 
             color="success"
-            defaultValue="123456"
+            defaultValue={currentEmployee.ID}
+            onChange={handleChange}
           />
           <TextField
-            id="Department"
-            select
-            label="Department"
-            defaultValue="Full-stack"
-            SelectProps={{
-              native: true
-            }}
-            variant="standard"
-          >
-            <option key='Design' value='Design'>
-              Design
-            </option>
-            <option key='Front-end' value='Front-end'>
-              Front-end
-            </option>
-            <option key='Back-end' value='Back-end'>
-              Back-end
-            </option>
-            <option key='Full-stack' value='Full-stack'>
-              Full-stack
-            </option>
-          </TextField>
+            id="designation"
+            label="Designation"
+            variant="standard" 
+            color="success"
+            defaultValue={currentEmployee.designation}
+            onChange={handleChange}
+          />
         </div>
+
+        {/* change Password Section */}
+        <h2 className="mt-5 text-lg">Change Password!</h2>
+        <TextField 
+          id="password" 
+          label="New Password" 
+          variant="standard" 
+          color="success"
+          onChange={handleChange}
+        />
+        <TextField 
+          id="password1" 
+          label="Confirm Password" 
+          variant="standard" 
+          color="success"
+        />
         <Button 
           type='submit' 
           variant="outlined" 
           color="success" 
-          sx={{ marginTop: '20px' }}
+          sx={{ marginTop: '20px',  padding: '10px' }}
         >
           UPDATE
-        </Button>
+        </Button> 
       </form>
     </section> 
   )

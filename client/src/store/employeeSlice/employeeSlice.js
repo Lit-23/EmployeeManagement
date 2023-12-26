@@ -7,14 +7,9 @@ const initialState = {
   error: false,
 }
 
-export const employeeSlice = createSlice({
+const employeeSlice = createSlice({
   name: 'employee',
-  initialState: {
-    currentEmployee: null,
-    admin: true,
-    loading: false,
-    error: false,
-  },
+  initialState,
   reducers: {
     addEmployeeStart: (state) => {
       state.loading = true;
@@ -41,6 +36,18 @@ export const employeeSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    updateEmployeeStart: (state) => {
+      state.loading = true;
+    },
+    updateEmployeeSuccess: (state, action) => {
+      state.currentEmployee = action.payload;
+      state.loading = false;
+      state.error = false;
+    },
+    updateEmployeeFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     signout: (state) => {
       state.currentEmployee = null;
       state.admin = true;
@@ -57,6 +64,9 @@ export const {
   signinStart, 
   signinSuccess,
   signinFailure,
+  updateEmployeeStart,
+  updateEmployeeSuccess,
+  updateEmployeeFailure,
   signout,
 } = employeeSlice.actions
 

@@ -57,9 +57,9 @@ export default function AddEmployee() {
   }
 
   return (
-    <section className="flex flex-col justify-center">
+    <section className="flex flex-col justify-center max-w-[600px] mx-auto">
       <h1 className="text-xl self-center">Add Employee</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col mx-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col">
         <input 
           type="file" 
           ref={fileRef} 
@@ -134,7 +134,6 @@ export default function AddEmployee() {
             label="Company ID" 
             variant="standard" 
             color="success"
-            placeholder="Enter 6 digit employees ID"
             helperText="This will be the employees default password in the portal!"
             onChange={handleChange}
           />
