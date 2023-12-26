@@ -16,7 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Profile from './Profile';
+import Account from './Account.jsx';
 import { Link, Outlet } from 'react-router-dom';
 
 // MUI ICONS
@@ -135,9 +135,12 @@ export default function PersistentDrawerLeft() {
             </Link>
           </Typography>
 
-          <div className='ml-auto cursor-pointer flex items-center justify-between'>
-            <Profile />
-          </div>
+          {
+            !admin &&
+            <div className='ml-auto cursor-pointer flex items-center justify-between'>
+              <Account />
+            </div>
+          }
 
         </Toolbar>
       </AppBar>
