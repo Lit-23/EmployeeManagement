@@ -8,6 +8,7 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Employee from "../models/employee.model.js";
 import errorHandler from "../utils/error.js";
+import { MongoClient } from "mongodb";
 
 export const addEmployee = async (req, res, next) => {
   // request content/body
@@ -111,6 +112,22 @@ export const updateEmployee = async (req, res, next) => {
   }
 };
 
+// signout
 export const signout = async (req, res) => {
   res.clearCookie('access_token').status(200).json('Signout success!');
+};
+
+// get the collection of all employees
+export const getEmployeeList = async (req, res, next) => {
+  const mongoURI = process.env.MONGO;
+  const client = new MongoClient(mongoURI);
+  try {
+    await client.connect();
+    const database = client.db('employee_list');
+    const collection = database.collection('employees');
+    const data = await collection.find().toArray();
+    res.status(200).json(data);
+  } catch (error) {
+    next(error);
+  }
 };

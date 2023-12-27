@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { TableFooter, TablePagination } from '@mui/material';
+import { TablePagination } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,33 +33,52 @@ function createData(name, designation, email, phoneNumber, address) {
   return { name, designation, email, phoneNumber, address };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('yoghurt', 159, 6.0, 24, 4.0),
-  // createData('Ice cream', 237, 9.0, 37, 4.3),
-  // createData('asdasd', 262, 16.0, 24, 6.0),
-  // createData('Cupcake', 305, 3.7, 67, 4.3),
-  // createData('Gingerbread', 356, 16.0, 49, 3.9),
-  // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  // createData('Eclair', 262, 16.0, 24, 6.0),
-  // createData('Cupcake', 305, 3.7, 67, 4.3),
-  // createData('Gingerbread', 356, 16.0, 49, 3.9),
-  // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  // createData('Eclair', 262, 16.0, 24, 6.0),
-  // createData('Cupcake', 305, 3.7, 67, 4.3),
-  // createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 export default function CustomizedTables() {
+  // state for fetching employees collection from database
+  // const [collection, setCollection] = useState({});
+
+  // const employeeList = () => {
+  //   if(collection) {
+  //     collection.map((employee) => (
+  //       createData(
+  //         employee.firstName,
+  //         employee.designation,
+  //         employee.email,
+  //         employee.phoneNumber,
+  //         employee.address
+  //       )
+  //     ))
+  //   }
+  // };
+  
+  const employeeList = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData('yoghurt', 159, 6.0, 24, 4.0),
+    // createData('Ice cream', 237, 9.0, 37, 4.3),
+    // createData('asdasd', 262, 16.0, 24, 6.0),
+    // createData('Cupcake', 305, 3.7, 67, 4.3),
+    // createData('Gingerbread', 356, 16.0, 49, 3.9),
+    // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    // createData('Eclair', 262, 16.0, 24, 6.0),
+    // createData('Cupcake', 305, 3.7, 67, 4.3),
+    // createData('Gingerbread', 356, 16.0, 49, 3.9),
+    // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    // createData('Eclair', 262, 16.0, 24, 6.0),
+    // createData('Cupcake', 305, 3.7, 67, 4.3),
+    // createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ]
+  
+
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [data, setData] = useState(rows);
+  const [data, setData] = useState(employeeList);
 
   const handleChangePage = (e, newpage) => {
     setPage(newpage);
@@ -71,11 +90,27 @@ export default function CustomizedTables() {
   };
 
   useEffect(() => {
-    let dataShown = rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    let dataShown = employeeList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     setData(dataShown);
   }, [page, rowsPerPage])
-    
+
+  // fuctionality for fetching employee's data
+  // const searchEmployee = async () => {
+  //   try {
+  //     const res = await fetch('/api/employee/list', { method: 'GET' });
+  //     const data = await res.json();
+  //     setCollection(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   searchEmployee();
+  // }, []);
+  // console.log(collection);
+
   return (
     <>
       <h1 className="text-xl mb-3">Employee Lists</h1>
@@ -101,16 +136,14 @@ export default function CustomizedTables() {
               </StyledTableRow>
             ))}
           </TableBody>
-          <TableFooter>
-            <TablePagination 
-              rowsPerPageOptions={[2,5,10,15]}
-              count={rows.length}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={handleRowsPerPage}
-            />
-          </TableFooter>
+          <TablePagination 
+            rowsPerPageOptions={[2,5,10,15]}
+            count={employeeList.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleRowsPerPage}
+          />
         </Table>
       </TableContainer>
     </>
