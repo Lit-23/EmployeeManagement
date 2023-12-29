@@ -9,6 +9,8 @@ import AddEmployee from "./pages/AddEmployee";
 import EmployeeList from "./pages/EmployeeList";
 import EmployeeProfile from "./pages/EmployeeProfile";
 import Settings from "./pages/Settings";
+import OngoingProject from "./components/OngoingProject";
+import CompletedProjects from "./components/CompletedProjects";
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/employee-list" element={<EmployeeList />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/ongoing-projects" element={<OngoingProject />} />
+          <Route path="/completed-projects" element={<CompletedProjects />} />
         </Route>
       </Routes>
     </BrowserRouter>
