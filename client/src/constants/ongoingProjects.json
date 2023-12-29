@@ -1,0 +1,27 @@
+[
+  {
+    "id": 21,
+    "title": "Wireless Network Deployment",
+    "description": "Implement secure and scalable wireless networks for businesses."
+  },
+  {
+    "id": 22,
+    "title": "User Interface (UI) Redesign",
+    "description": "Redesign the user interface of an application or website to enhance user experience."
+  },
+  {
+    "id": 23,
+    "title": "User Experience (UX) Testing",
+    "description": "Conduct usability testing and make improvements based on user feedback."
+  },
+  {
+    "id": 24,
+    "title": "Employee Training Programs",
+    "description": "Develop and deliver training programs to enhance the skills of client employees in specific technologies."
+  },
+  {
+    "id": 25,
+    "title": "Cybersecurity Awareness Workshops",
+    "description": "Conduct workshops to educate employees about cybersecurity best practices."
+  }
+]

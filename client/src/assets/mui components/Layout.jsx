@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -110,7 +110,7 @@ export default function PersistentDrawerLeft() {
       console.log(error);
     }
   };
-
+  
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -163,7 +163,7 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '12px', fontSize: '15px'}}>MAIN</Typography>
+        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '12px', fontSize: '15px', fontWeight: 400}}>MAIN</Typography>
         <List>
           <Link to='/dashboard'>
             <ListItem key='Dashboard' disablePadding>
@@ -189,7 +189,7 @@ export default function PersistentDrawerLeft() {
             </Link>
           }
         </List>
-        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '5px', fontSize: '15px'}}>LISTS</Typography>
+        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '5px', fontSize: '15px', fontWeight: 400}}>LISTS</Typography>
         <List>
           {
             admin &&
@@ -215,7 +215,7 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           </Link>
         </List>
-        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '5px', fontSize: '15px'}}>SETTINGS</Typography>
+        <Typography variant="h2" noWrap component="div" sx={{paddingX: '12px', paddingTop: '5px', fontSize: '15px', fontWeight: 400}}>SETTINGS</Typography>
         <List>
           <Link to='/settings'>
             <ListItem key='Settings' disablePadding>

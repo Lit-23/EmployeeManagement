@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "title": "E-commerce Website",
+    "description": "Design and develop an online store with features like product catalog, shopping cart, and secure payment processing."
+  },
+  {
+    "id": 2,
+    "title": "Corporate Website",
+    "description": "Create a professional website for a company, showcasing its products, services, and contact information."
+  },
+  {
+    "id": 3,
+    "title": "Content Management System (CMS)",
+    "description": "Build a custom CMS to allow clients to easily manage and update their website content."
+  },
+  {
+    "id": 4,
+    "title": "iOS and Android App",
+    "description": "Develop a mobile application for both iOS and Android platforms, catering to specific business needs or consumer demands."
+  },
+  {
+    "id": 5,
+    "title": "Cross-Platform App",
+    "description": "Build a cross-platform app using frameworks like React Native or Flutter for cost-effective development."
+  },
+  {
+    "id": 6,
+    "title": "Enterprise Resource Planning (ERP)",
+    "description": "Develop a comprehensive ERP system to integrate and streamline various business processes."
+  },
+  {
+    "id": 7,
+    "title": "Customer Relationship Management (CRM)",
+    "description": "Create a CRM system to manage customer interactions, sales, and lead tracking."
+  },
+  {
+    "id": 8,
+    "title": "Migration to Cloud",
+    "description": "Assist clients in migrating their on-premises infrastructure to cloud platforms like AWS, Azure, or Google Cloud."
+  },
+  {
+    "id": 9,
+    "title": "Serverless Architecture",
+    "description": "Implement serverless computing solutions to optimize scalability and reduce infrastructure costs."
+  },
+  {
+    "id": 10,
+    "title": "Penetration Testing",
+    "description": "Conduct security assessments to identify vulnerabilities and strengthen the cybersecurity posture."
+  },
+  {
+    "id": 11,
+    "title": "Security Information and Event Management (SIEM)",
+    "description": "Implement SIEM solutions for real-time threat detection and response."
+  },
+  {
+    "id": 12,
+    "title": "Data Warehousing",
+    "description": "Design and implement a data warehouse for storing and analyzing large volumes of data."
+  },
+  {
+    "id": 13,
+    "title": "Dashboard and Reporting System",
+    "description": "Develop interactive dashboards and reports for data-driven decision-making."
+  },
+  {
+    "id": 14,
+    "title": "Predictive Analytics",
+    "description": "Build predictive models to analyze historical data and make predictions for future trends."
+  },
+  {
+    "id": 15,
+    "title": "Chatbots and Virtual Assistants",
+    "description": "Develop chatbots or virtual assistants to enhance customer support or automate tasks."
+  },
+  {
+    "id": 16,
+    "title": "Smart Contracts",
+    "description": "Implement smart contracts for decentralized applications (DApps) on blockchain platforms like Ethereum."
+  },
+  {
+    "id": 17,
+    "title": "Supply Chain Blockchain",
+    "description": "Build a blockchain solution for transparent and secure supply chain management."
+  },
+  {
+    "id": 18,
+    "title": "Technology Assessment",
+    "description": "Conduct assessments to evaluate existing IT infrastructure and provide recommendations for improvement."
+  },
+  {
+    "id": 19,
+    "title": "Digital Transformation Planning",
+    "description": "Assist clients in developing and executing digital transformation strategies."
+  },
+  {
+    "id": 20,
+    "title": "Network Design and Optimization",
+    "description": "Design and optimize network infrastructure for improved performance and security."
+  }
+]
