@@ -3,8 +3,8 @@ import ongoingProjects from '../constants/ongoingProjects.json';
 import completedProjects from '../constants/completedProjects.json';
 import DashboardCard from '../components/DashboardCard';
 import { ongoingIcon, completedIcon, salaryIcon, employeeIcon } from '../assets/icons';
-import DesignationPieChart from '../components/DesignationPieChart';
-import TenureLineChart from '../components/TenureLineChart';
+import TenureBarChart from '../components/TenureBarChart';
+import DesignationLineChart from '../components/DesignationLineChart';
 
 export default function Dashboard() {
   // completed project
@@ -23,8 +23,8 @@ export default function Dashboard() {
       </div>
 
       <div className='flex max-[769px]:flex-col justify-center gap-10 max-[769px]:gap-5'>
-        <DesignationPieChart />
-        <TenureLineChart />
+        <TenureBarChart />
+        <DesignationLineChart />
       </div>
     </section>
   )
