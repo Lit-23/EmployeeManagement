@@ -23,6 +23,7 @@ export const addEmployee = async (req, res, next) => {
     phoneNumber,
     ID,
     designation,
+    salary,
   } = req.body;
 
   // hashed the password using bcryptjs for security
@@ -39,6 +40,7 @@ export const addEmployee = async (req, res, next) => {
     ID,
     password: hashedPassword,
     designation,
+    salary,
   });
 
   try {

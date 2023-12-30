@@ -1,6 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployeeStart, addEmployeeSuccess, addEmployeeFailure } from "../store/employeeSlice/employeeSlice.js";
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import Input from '@mui/material/Input';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import BasicSelect from "../assets/mui components/selectItem.jsx";
@@ -27,7 +31,7 @@ export default function AddEmployee() {
   };
   const designation = {
     id: "designation",
-    data: ["Designer", "Front-end", "Back-end", "Full-stack"]
+    data: ["Designer", "Front-end", "Back-end", "Full-stack", "Mobile-dev", "Web-dev", "Cyber-Security"]
   };
 
   // onChange functionality
@@ -191,6 +195,16 @@ export default function AddEmployee() {
             onChange={handleChange}
           />
           <BasicSelect  item={designation} formData={formData} setFormData={setFormData} />
+          <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+            <InputLabel htmlFor="standard-adornment-amount" color="success">Salary</InputLabel>
+            <Input
+              id="salary"
+              color="success"
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+              startAdornment={<InputAdornment position="start">$</InputAdornment>}
+              onChange={handleChange}
+            />
+          </FormControl>
         </div>
         <Button 
           type='submit' 

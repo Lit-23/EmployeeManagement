@@ -18,7 +18,7 @@ export default function Dashboard() {
       <div className='flex max-[769px]:flex-col justify-between gap-3 mb-5'>
         <DashboardCard title={'Ongoing Projects'} icon={ongoingIcon} value={5} link='/ongoing-projects'/>
         <DashboardCard title={'Completed Projects'} icon={completedIcon} value={20} link='/completed-projects'/>
-        <DashboardCard title={'Employees'} icon={employeeIcon} value={5} link='/employee-list'/>
+        <DashboardCard title={'Employees'} icon={employeeIcon} link='/employee-list'/>
         <DashboardCard title={'Avg. Salary'} icon={salaryIcon} value={`$${500}`}/>
       </div>
 

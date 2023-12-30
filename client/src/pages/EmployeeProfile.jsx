@@ -11,6 +11,18 @@ import {
 // imports for firebase storage
 import { app } from "../firebase/firebaseConfig.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import BasicSelect from "../assets/mui components/selectItem.jsx";
+
+// constants
+const defaultProfile = 'https://hwchamber.co.uk/wp-content/uploads/2022/04/avatar-placeholder.gif';
+const gender = {
+  id: "gender",
+  data: ["MALE", "FEMALE"]
+};
+const designation = {
+  id: "designation",
+  data: ["Designer", "Front-end", "Back-end", "Full-stack", "Mobile-dev", "Web-dev", "Cyber-Security"]
+};
 
 export default function EmployeeProfile() {
   const { currentEmployee } = useSelector(state => state.employee);
@@ -169,7 +181,7 @@ export default function EmployeeProfile() {
           />
           <TextField 
             id="number" 
-            type="number"
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
             label="Contact Number" 
             variant="standard" 
             color="success"
@@ -191,6 +203,15 @@ export default function EmployeeProfile() {
             variant="standard" 
             color="success"
             defaultValue={currentEmployee.designation}
+            onChange={handleChange}
+          />
+          <TextField
+            disabled
+            id="salary"
+            label="Salary"
+            variant="standard" 
+            color="success"
+            defaultValue={`$${currentEmployee.salary}`}
             onChange={handleChange}
           />
         </div>
