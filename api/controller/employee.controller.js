@@ -133,3 +133,13 @@ export const getEmployeeList = async (req, res, next) => {
     next(error);
   }
 };
+
+// delete employee
+export const deleteEmployee = async (req, res, next) => {
+  try {
+    await Employee.findByIdAndDelete(req.params.id);
+    res.status(200).json('User has been deleted!');
+  } catch (error) {
+    next(error);
+  }
+};

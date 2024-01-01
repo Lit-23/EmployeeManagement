@@ -7,11 +7,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { TablePagination } from '@mui/material';
+import { Divider, TablePagination } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import {  
+  deleteEmployeeStart,
+  deleteEmployeeSuccess,
+  deleteEmployeeFailure 
+} from '../../store/employeeSlice/employeeSlice.js'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: '#2e7d32',
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -29,116 +35,109 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, designation, email, phoneNumber, address) {
-  return { name, designation, email, phoneNumber, address };
-}
-
 export default function CustomizedTables() {
-  // state for fetching employees collection from database
-  // const [collection, setCollection] = useState({});
+    // states & functionality for fetching data from api
+  const [collection, setCollection] = useState([]);
 
-  // const employeeList = () => {
-  //   if(collection) {
-  //     collection.map((employee) => (
-  //       createData(
-  //         employee.firstName,
-  //         employee.designation,
-  //         employee.email,
-  //         employee.phoneNumber,
-  //         employee.address
-  //       )
-  //     ))
-  //   }
-  // };
-  
-  const employeeList = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('yoghurt', 159, 6.0, 24, 4.0),
-    // createData('Ice cream', 237, 9.0, 37, 4.3),
-    // createData('asdasd', 262, 16.0, 24, 6.0),
-    // createData('Cupcake', 305, 3.7, 67, 4.3),
-    // createData('Gingerbread', 356, 16.0, 49, 3.9),
-    // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    // createData('Eclair', 262, 16.0, 24, 6.0),
-    // createData('Cupcake', 305, 3.7, 67, 4.3),
-    // createData('Gingerbread', 356, 16.0, 49, 3.9),
-    // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    // createData('Eclair', 262, 16.0, 24, 6.0),
-    // createData('Cupcake', 305, 3.7, 67, 4.3),
-    // createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ]
-  
+  useEffect(() => {
+    const searchCollection = async () => {
+      try {
+        const res = await fetch('/api/employee/list', { method: 'GET' });
+        const data = await res.json();
+        setCollection(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    searchCollection();
+  }, [])
 
-
+  // states & functionality for pagination
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [data, setData] = useState(employeeList);
+  const [data, setData] = useState(collection);
 
   const handleChangePage = (e, newpage) => {
     setPage(newpage);
   };
-
   const handleRowsPerPage = (e) => {
     setRowsPerPage(e.target.value);
     setPage(0);
   };
 
   useEffect(() => {
-    let dataShown = employeeList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    let dataShown = collection.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     setData(dataShown);
   }, [page, rowsPerPage])
 
-  // fuctionality for fetching employee's data
-  // const searchEmployee = async () => {
-  //   try {
-  //     const res = await fetch('/api/employee/list', { method: 'GET' });
-  //     const data = await res.json();
-  //     setCollection(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   searchEmployee();
-  // }, []);
-  // console.log(collection);
+  // functionality for deleting employee
+  const { admin } = useSelector(state => state.employee);
+  const dispatch = useDispatch();
+  const handleDelete = async (event) => {
+    const parentElementId = event.currentTarget.parentElement.id;
+    console.log(parentElementId);
+    try {
+      dispatch(deleteEmployeeStart());
+      const res = await fetch(`/api/employee/delete/${parentElementId}`, { method: 'DELETE' });
+      const data = await res.json();
+      if(res.success === false) {
+        dispatch(deleteEmployeeFailure(data));
+        return;
+      }
+      dispatch(deleteEmployeeSuccess());
+    } catch (error) {
+      deleteEmployeeFailure(error);
+    }
+  };
 
   return (
     <>
-      <h1 className="text-xl mb-3">Employee Lists</h1>
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
-            <TableRow>
+            <TableRow backgroundColor='red'>
               <StyledTableCell>Name</StyledTableCell>
               <StyledTableCell align="center">Designation</StyledTableCell>
               <StyledTableCell align="center">Email</StyledTableCell>
               <StyledTableCell align="center">Phone Number</StyledTableCell>
-              <StyledTableCell align="center">Address</StyledTableCell>
+              {
+                admin 
+                  ? <>
+                      <StyledTableCell align="center">ID</StyledTableCell>
+                      <StyledTableCell align="center">Options</StyledTableCell>
+                    </>
+                  : <StyledTableCell align="center">Address</StyledTableCell>
+              }
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((employee) => (
-              <StyledTableRow key={employee.name}>
-                <StyledTableCell component="th" scope="row">{employee.name}</StyledTableCell>
-                <StyledTableCell align="center">{employee.designation}</StyledTableCell>
-                <StyledTableCell align="center">{employee.email}</StyledTableCell>
-                <StyledTableCell align="center">{employee.phoneNumber}</StyledTableCell>
-                <StyledTableCell align="center">{employee.address}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {
+              data.map((employee) => (
+                <StyledTableRow key={employee._id}>
+                  <StyledTableCell component="th" scope="row">{`${employee.firstName} ${employee.lastName}`}</StyledTableCell>
+                  <StyledTableCell align="center">{employee.designation}</StyledTableCell>
+                  <StyledTableCell align="center">{employee.email}</StyledTableCell>
+                  <StyledTableCell align="center">{employee.phoneNumber}</StyledTableCell>
+                  {
+                    admin 
+                      ? <>
+                          <StyledTableCell align="center">{employee.ID}</StyledTableCell>
+                          <StyledTableCell id={employee._id} align="center">
+                            <button className='text-[#2e7d32] hover:underline duration-300'>Update</button>
+                            <span>/</span>
+                            <button onClick={handleDelete} className='text-red-700 hover:underline duration-300'>Delete</button>
+                          </StyledTableCell>
+                        </>
+                      : <StyledTableCell align="center">{employee.address}</StyledTableCell>
+                  }
+                </StyledTableRow>
+              ))
+            }
           </TableBody>
           <TablePagination 
             rowsPerPageOptions={[2,5,10,15]}
-            count={employeeList.length}
+            count={collection.length}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}

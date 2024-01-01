@@ -1,9 +1,10 @@
-import CustomizedTables from '../assets/mui components/Table'
+import CustomizedTables from '../assets/mui components/Table';
 
-export default function EmployeeList() {
+export default function EmployeeList() {  
   return (
-    <div>
+    <section>
+      <h1 className="text-xl mb-3">Employee List</h1>
       <CustomizedTables />
-    </div>
+    </section>
   )
 }

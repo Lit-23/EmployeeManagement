@@ -48,6 +48,17 @@ const employeeSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    deleteEmployeeStart: (state) => {
+      state.loading = true;
+    },
+    deleteEmployeeSuccess: (state) => {
+      state.loading = false;
+      state.error = false;
+    },
+    deleteEmployeeFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     signout: (state) => {
       state.currentEmployee = null;
       state.admin = true;
@@ -67,6 +78,9 @@ export const {
   updateEmployeeStart,
   updateEmployeeSuccess,
   updateEmployeeFailure,
+  deleteEmployeeStart,
+  deleteEmployeeSuccess,
+  deleteEmployeeFailure,
   signout,
 } = employeeSlice.actions
 
