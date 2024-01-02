@@ -19,7 +19,7 @@ export default function Account() {
 
   // signout functionality
   const defaultProfile = 'https://hwchamber.co.uk/wp-content/uploads/2022/04/avatar-placeholder.gif';
-  const { currentEmployee, admin } = useSelector(state => state.employee);
+  const { currentUser } = useSelector(state => state.employee);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = async () => {
@@ -35,11 +35,7 @@ export default function Account() {
   return (
     <div>
       <img 
-        src={ 
-          !admin
-          ? currentEmployee.profilePicture 
-          : defaultProfile
-        } 
+        src={ currentUser.profilePicture } 
         className="h-8 w-8 self-center rounded-full object-cover my-3"
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}

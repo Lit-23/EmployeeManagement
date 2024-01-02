@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentEmployee: null,
-  admin: true,
+  currentUser: null,
+  employee: null,
+  admin: false,
   loading: false,
   error: false,
 }
@@ -11,6 +12,12 @@ const employeeSlice = createSlice({
   name: 'employee',
   initialState,
   reducers: {
+    adminSignin: (state) => {
+      state.admin = true;
+    },
+    adminSignout: (state) => {
+      state.admin = false;
+    },
     addEmployeeStart: (state) => {
       state.loading = true;
     },
@@ -35,6 +42,18 @@ const employeeSlice = createSlice({
     signinFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
+    },
+    searchEmployeeByIdStart: (state) => {
+      state.loading = true;
+    },
+    searchEmployeeByIdSuccess: (state, action) => {
+      state.employee = action.payload;
+      state.loading = false;
+      state.error = false;
+    },
+    searchEmployeeByIdFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
     updateEmployeeStart: (state) => {
       state.loading = true;
@@ -61,7 +80,6 @@ const employeeSlice = createSlice({
     },
     signout: (state) => {
       state.currentEmployee = null;
-      state.admin = true;
       state.loading = false;
       state.error = false;
     },
@@ -69,6 +87,11 @@ const employeeSlice = createSlice({
 });
 
 export const { 
+  adminSignin,
+  adminSignout,
+  searchEmployeeByIdStart,
+  searchEmployeeByIdSuccess,
+  searchEmployeeByIdFailure,
   addEmployeeStart, 
   addEmployeeSuccess, 
   addEmployeeFailure, 

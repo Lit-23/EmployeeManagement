@@ -12,8 +12,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {  
   deleteEmployeeStart,
   deleteEmployeeSuccess,
-  deleteEmployeeFailure 
+  deleteEmployeeFailure,
+  searchEmployeeByIdStart,
+  searchEmployeeByIdSuccess,
+  searchEmployeeByIdFailure,
 } from '../../store/employeeSlice/employeeSlice.js'
+import { useNavigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -91,6 +95,24 @@ export default function CustomizedTables() {
     }
   };
 
+  const navigate = useNavigate();
+  const handleEdit = async (event) => {
+    const parentElementId = event.currentTarget.parentElement.id;
+    try {
+      dispatch(searchEmployeeByIdStart());
+      const res = await fetch(`/api/employee/find/${parentElementId}`, { method: 'POST' })
+      const data = await res.json();
+      if(res.success === false) {
+        dispatch(searchEmployeeByIdFailure(data));
+        return;
+      };
+      dispatch(searchEmployeeByIdSuccess(data));
+      navigate('/update');
+    } catch (error) {
+      dispatch(searchEmployeeByIdFailure(error));
+    }
+  };
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -124,7 +146,7 @@ export default function CustomizedTables() {
                       ? <>
                           <StyledTableCell align="center">{employee.ID}</StyledTableCell>
                           <StyledTableCell id={employee._id} align="center">
-                            <button className='text-[#2e7d32] hover:underline duration-300'>Update</button>
+                            <button onClick={handleEdit} className='text-[#2e7d32] hover:underline duration-300'>Edit</button>
                             <span>/</span>
                             <button onClick={handleDelete} className='text-red-700 hover:underline duration-300'>Delete</button>
                           </StyledTableCell>

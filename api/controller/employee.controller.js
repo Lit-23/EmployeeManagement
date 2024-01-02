@@ -77,11 +77,21 @@ export const signin = async (req, res, next) => {
   }
 };
 
+// find employee by id
+export const findEmployee = async (req, res, next) => {
+  try {
+    const employee = await Employee.findById(req.params.id);
+    res.status(200).json(employee);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // update employee
 export const updateEmployee = async (req, res, next) => {
-  if(req.employee.id !== req.params.id) {
-    return next(errorHandler(401, "You can update only your account!"));
-  }
+  // if(req.employee.id !== req.params.id) {
+  //   return next(errorHandler(401, "You can update only your account!"));
+  // }
   try {
     // if there is a new password, it will be hashed first before saving to the database
     if (req.body.password) {

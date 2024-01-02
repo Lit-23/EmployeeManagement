@@ -34,7 +34,7 @@ import { useSelector }  from "react-redux";
 // imports for signout functionality
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signout } from '../../store/employeeSlice/employeeSlice.js';
+import { adminSignout, signout } from '../../store/employeeSlice/employeeSlice.js';
 
 const drawerWidth = 240;
 
@@ -96,16 +96,20 @@ export default function PersistentDrawerLeft() {
   };
 
   // for conditional rendering when admin === true || admin === false
-  const { admin } = useSelector((state) => state.employee);
+  const { admin, currentUser } = useSelector((state) => state.employee);
 
   // signout functionality
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
-      const res = await fetch('/api/employee/sign-out');
-      dispatch(signout());
-      navigate('/employee-login');
+      if(currentUser) {
+        const res = await fetch('/api/employee/sign-out');
+        dispatch(signout());
+        navigate('/employee-login');
+      } else {
+        dispatch(adminSignout());
+      }
     } catch (error) {
       console.log(error);
     }

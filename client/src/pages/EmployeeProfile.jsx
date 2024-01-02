@@ -11,21 +11,20 @@ import {
 // imports for firebase storage
 import { app } from "../firebase/firebaseConfig.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import BasicSelect from "../assets/mui components/selectItem.jsx";
+// import BasicSelect from "../assets/mui components/selectItem.jsx";
 
 // constants
-const defaultProfile = 'https://hwchamber.co.uk/wp-content/uploads/2022/04/avatar-placeholder.gif';
-const gender = {
-  id: "gender",
-  data: ["MALE", "FEMALE"]
-};
-const designation = {
-  id: "designation",
-  data: ["Designer", "Front-end", "Back-end", "Full-stack", "Mobile-dev", "Web-dev", "Cyber-Security"]
-};
+// const gender = {
+//   id: "gender",
+//   data: ["MALE", "FEMALE"]
+// };
+// const designation = {
+//   id: "designation",
+//   data: ["Designer", "Front-end", "Back-end", "Full-stack", "Mobile-dev", "Web-dev", "Cyber-Security"]
+// };
 
 export default function EmployeeProfile() {
-  const { currentEmployee } = useSelector(state => state.employee);
+  const { currentUser } = useSelector(state => state.employee);
 
   const [formData, setFormData] = useState({});
   const [image, setImage] = useState(null);
@@ -68,7 +67,7 @@ export default function EmployeeProfile() {
     e.preventDefault();
     try {
       dispatch(updateEmployeeStart());
-      const res = await fetch(`/api/employee/update/${currentEmployee._id}`, {
+      const res = await fetch(`/api/employee/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -100,7 +99,7 @@ export default function EmployeeProfile() {
           onChange={(e) => setImage(e.target.files[0])}
         />
         <img 
-          src={formData.profilePicture || currentEmployee.profilePicture}
+          src={formData.profilePicture || currentUser.profilePicture}
           alt="profile" 
           className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mb-3"
           onClick={() => fileRef.current.click()}
@@ -126,7 +125,7 @@ export default function EmployeeProfile() {
               variant="standard" 
               color="success"
               className="flex-1"
-              defaultValue={currentEmployee.firstName}
+              defaultValue={currentUser.firstName}
               onChange={handleChange}
             />
             <TextField 
@@ -135,7 +134,7 @@ export default function EmployeeProfile() {
               variant="standard" 
               color="success"
               className="flex-1"
-              defaultValue={currentEmployee.lastName}
+              defaultValue={currentUser.lastName}
               onChange={handleChange}
             />
           </div>
@@ -147,7 +146,7 @@ export default function EmployeeProfile() {
               variant="standard" 
               color="success"
               className="flex-1"
-              defaultValue={currentEmployee.birthDate.slice(0, 10)}
+              defaultValue={currentUser.birthDate.slice(0, 10)}
               onChange={handleChange}
             />
 
@@ -157,7 +156,7 @@ export default function EmployeeProfile() {
               variant="standard" 
               color="success"
               className="flex-1"
-              defaultValue={currentEmployee.gender}
+              defaultValue={currentUser.gender}
               onChange={handleChange}
             />
           </div>
@@ -167,7 +166,7 @@ export default function EmployeeProfile() {
             label="Address" 
             variant="standard" 
             color="success"
-            defaultValue={currentEmployee.address}
+            defaultValue={currentUser.address}
             onChange={handleChange}
           />
           <TextField 
@@ -176,7 +175,7 @@ export default function EmployeeProfile() {
             label="Email" 
             variant="standard" 
             color="success"
-            defaultValue={currentEmployee.email}
+            defaultValue={currentUser.email}
             onChange={handleChange}
           />
           <TextField 
@@ -185,7 +184,7 @@ export default function EmployeeProfile() {
             label="Contact Number" 
             variant="standard" 
             color="success"
-            defaultValue={currentEmployee.phoneNumber}
+            defaultValue={currentUser.phoneNumber}
             onChange={handleChange}
           />
           <TextField 
@@ -194,7 +193,7 @@ export default function EmployeeProfile() {
             label="Company ID" 
             variant="standard" 
             color="success"
-            defaultValue={currentEmployee.ID}
+            defaultValue={currentUser.ID}
             onChange={handleChange}
           />
           <TextField
@@ -202,7 +201,7 @@ export default function EmployeeProfile() {
             label="Designation"
             variant="standard" 
             color="success"
-            defaultValue={currentEmployee.designation}
+            defaultValue={currentUser.designation}
             onChange={handleChange}
           />
           <TextField
@@ -211,7 +210,7 @@ export default function EmployeeProfile() {
             label="Salary"
             variant="standard" 
             color="success"
-            defaultValue={`$${currentEmployee.salary}`}
+            defaultValue={`$${currentUser.salary}`}
             onChange={handleChange}
           />
         </div>
