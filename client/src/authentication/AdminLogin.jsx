@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
-import { adminSignin } from '../store/employeeSlice/employeeSlice.js'
+import { adminSignin } from '../store/employeeSlice/employeeSlice.js';
 
 export default function AdminLogin() {
   const dispatch = useDispatch();

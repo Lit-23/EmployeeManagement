@@ -18,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Account from './Account.jsx';
 import { Link, Outlet } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 // MUI ICONS
 import {
@@ -114,6 +115,13 @@ export default function PersistentDrawerLeft() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    Swal.showLoading();
+    setTimeout(() => {
+      Swal.close()
+    }, 500);
+  }, []);
   
   return (
     <Box sx={{ display: 'flex' }}>

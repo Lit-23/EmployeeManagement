@@ -3,6 +3,7 @@ import DashboardCard from '../components/DashboardCard';
 import { ongoingIcon, completedIcon, salaryIcon, employeeIcon } from '../assets/icons';
 import TenureBarChart from '../components/TenureBarChart';
 import DesignationLineChart from '../components/DesignationLineChart';
+import Swal from 'sweetalert2';
 
 export default function Dashboard() {
   const [collection, setCollection] = useState([]);
@@ -22,17 +23,15 @@ export default function Dashboard() {
     };
     searchEmployee();
 
-    const searchSalary = async () => {
-      try { 
-        collection.map((employee) => setTotalSalary(prev => (prev + Number(employee.salary))))
-        console.log(totalSalary);
-  
-      } catch (error) {
-        console.log(error);
-      }
+    const searchSalary = () => {
+      collection.map((employee) => setTotalSalary(prev => (prev + Number(employee.salary))))
     };
-  
     searchSalary();
+    
+    Swal.showLoading();
+    setTimeout(() => {
+      Swal.close();
+    }, 500);
   }, [])
 
   return (
