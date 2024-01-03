@@ -11,6 +11,7 @@ import {
 // imports for firebase storage
 import { app } from "../firebase/firebaseConfig.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2";
 
 // constants
 const defaultProfile = 'https://hwchamber.co.uk/wp-content/uploads/2022/04/avatar-placeholder.gif';
@@ -24,7 +25,7 @@ const designation = {
 };
 
 export default function EmployeeProfile() {
-  const { employee, admin } = useSelector(state => state.employee);
+  const { employee, admin, error } = useSelector(state => state.employee);
 
   const [formData, setFormData] = useState({});
   const [image, setImage] = useState(null);
@@ -77,11 +78,14 @@ export default function EmployeeProfile() {
       const data = await res.json();
       if(data.success === false) {
         dispatch(updateEmployeeFailure(data));
-        alert('Something went wrong!');
         return;
       };
       dispatch(updateEmployeeSuccess(data));
-      alert('Updated Successfully!');
+      Swal.fire({
+        title: "Good job!",
+        text: "Successfully updated your profile!",
+        icon: "success"
+      });
     } catch (error) {
       dispatch(updateEmployeeSuccess(error));
     };
@@ -213,6 +217,12 @@ export default function EmployeeProfile() {
                 onChange={handleChange}
               />
             </div>
+            {
+              error &&
+              <p className='text-red-700 mt-5'>
+                { error.message || 'Something went wrong!' }
+              </p>
+            }
             <Button 
               type='submit' 
               variant="outlined" 

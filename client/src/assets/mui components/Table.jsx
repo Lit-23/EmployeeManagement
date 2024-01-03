@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Divider, TablePagination } from '@mui/material';
+import { TablePagination } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {  
   deleteEmployeeStart,
@@ -18,6 +18,7 @@ import {
   searchEmployeeByIdFailure,
 } from '../../store/employeeSlice/employeeSlice.js'
 import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,17 +43,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function CustomizedTables() {
     // states & functionality for fetching data from api
   const [collection, setCollection] = useState([]);
+  const { admin } = useSelector(state  => state.employee);
+  
+  const searchCollection = async () => {
+    try {
+      const res = await fetch('/api/employee/list', { method: 'GET' });
+      const data = await res.json();
+      setCollection(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const searchCollection = async () => {
-      try {
-        const res = await fetch('/api/employee/list', { method: 'GET' });
-        const data = await res.json();
-        setCollection(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     searchCollection();
   }, [])
 
@@ -76,23 +79,35 @@ export default function CustomizedTables() {
   }, [page, rowsPerPage])
 
   // functionality for deleting employee
-  const { admin } = useSelector(state => state.employee);
   const dispatch = useDispatch();
   const handleDelete = async (event) => {
     const parentElementId = event.currentTarget.parentElement.id;
-    console.log(parentElementId);
-    try {
-      dispatch(deleteEmployeeStart());
-      const res = await fetch(`/api/employee/delete/${parentElementId}`, { method: 'DELETE' });
-      const data = await res.json();
-      if(res.success === false) {
-        dispatch(deleteEmployeeFailure(data));
-        return;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then( async (result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteEmployeeStart());
+        const res = await fetch(`/api/employee/delete/${parentElementId}`, { method: 'DELETE' });
+        const data = await res.json();
+        if(res.success === false) {
+          dispatch(deleteEmployeeFailure(data)); 
+          return;
+        }
+        dispatch(deleteEmployeeSuccess());
+        Swal.fire({
+          title: "Deleted!",
+          text: "An employee has been deleted.",
+          icon: "success"
+        });
+        searchCollection();
       }
-      dispatch(deleteEmployeeSuccess());
-    } catch (error) {
-      deleteEmployeeFailure(error);
-    }
+    });
   };
 
   const navigate = useNavigate();

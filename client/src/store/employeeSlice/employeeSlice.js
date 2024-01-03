@@ -17,12 +17,13 @@ const employeeSlice = createSlice({
     },
     adminSignout: (state) => {
       state.admin = false;
+      state.employee = null;
     },
     addEmployeeStart: (state) => {
       state.loading = true;
     },
     addEmployeeSuccess: (state, action) => {
-      state.currentEmployee = action.payload;
+      state.currentUser = action.payload;
       state.loading = false;
       state.error = false;
     },
@@ -32,9 +33,10 @@ const employeeSlice = createSlice({
     },
     signinStart: (state) => {
       state.loading = true;
+      state.employee = null;
     },
     signinSuccess: (state, action) => {
-      state.currentEmployee = action.payload;
+      state.currentUser = action.payload;
       state.admin = false;
       state.loading = false;
       state.error = false;
@@ -59,7 +61,7 @@ const employeeSlice = createSlice({
       state.loading = true;
     },
     updateEmployeeSuccess: (state, action) => {
-      state.currentEmployee = action.payload;
+      state.currentUser = action.payload;
       state.loading = false;
       state.error = false;
     },
@@ -79,7 +81,7 @@ const employeeSlice = createSlice({
       state.error = action.payload;
     },
     signout: (state) => {
-      state.currentEmployee = null;
+      state.currentUser = null;
       state.loading = false;
       state.error = false;
     },

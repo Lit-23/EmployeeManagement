@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import BasicSelect from "../assets/mui components/selectItem.jsx";
 import DatePicker from "../assets/mui components/DatePicker.jsx";
+import Swal from "sweetalert2";
 
 // firebase imports
 import { app } from "../firebase/firebaseConfig.js";
@@ -16,6 +17,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 
 export default function AddEmployee() {
   const [formData, setFormData] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
   const { loading, error } = useSelector((state) => state.employee);
   const [image, setImage] = useState(null);
   const [imagePercent, setImagePercent] = useState(0);
@@ -37,7 +39,7 @@ export default function AddEmployee() {
   // onChange functionality
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-  };  
+  }; 
 
   // profilePicture upload functionality
   useEffect(() => {
@@ -90,7 +92,11 @@ export default function AddEmployee() {
 
       // add employee success
       dispatch(addEmployeeSuccess(data));
-      alert('Added employee successfully!');
+      Swal.fire({
+        title: "Good job!",
+        text: "Successfully added an employee!",
+        icon: "success"
+      })
     } catch (error) {
       dispatch(addEmployeeFailure(error));
     }
@@ -179,7 +185,7 @@ export default function AddEmployee() {
           <TextField 
             required
             id="phoneNumber" 
-            type="number"
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
             label="Contact Number" 
             variant="standard" 
             color="success"
@@ -206,17 +212,20 @@ export default function AddEmployee() {
             />
           </FormControl>
         </div>
+        {
+          error &&
+          <p className='text-red-700 mt-5'>
+            { error.message || 'Something went wrong!' }
+          </p>
+        }
         <Button 
           type='submit' 
           variant="outlined" 
           color="success" 
           sx={{ marginTop: '20px',  padding: '12px' }}
         >
-          { loading ? 'LOADING' : 'SUBMIT' }
+          { loading ? 'LOADING...' : 'SUBMIT' }
         </Button>
-        <p className='text-red-700 mt-5'>
-          {error ? error.message || 'Something went wrong!' : ''}
-        </p>
       </form>
     </section> 
   )

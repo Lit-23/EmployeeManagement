@@ -11,6 +11,7 @@ import {
 // imports for firebase storage
 import { app } from "../firebase/firebaseConfig.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2";
 // import BasicSelect from "../assets/mui components/selectItem.jsx";
 
 // constants
@@ -24,7 +25,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 // };
 
 export default function EmployeeProfile() {
-  const { currentUser } = useSelector(state => state.employee);
+  const { currentUser, error } = useSelector(state => state.employee);
 
   const [formData, setFormData] = useState({});
   const [image, setImage] = useState(null);
@@ -77,11 +78,14 @@ export default function EmployeeProfile() {
       const data = await res.json();
       if(data.success === false) {
         dispatch(updateEmployeeFailure(data));
-        alert('Something went wrong!');
         return;
       };
       dispatch(updateEmployeeSuccess(data));
-      alert('Updated Successfully!');
+      Swal.fire({
+        title: "Good job!",
+        text: "Successfully updated your profile!",
+        icon: "success"
+      });
     } catch (error) {
       dispatch(updateEmployeeSuccess(error));
     };
@@ -230,6 +234,12 @@ export default function EmployeeProfile() {
           variant="standard" 
           color="success"
         />
+        {
+          error &&
+          <p className='text-red-700 mt-5'>
+            { error.message || 'Something went wrong!' }
+          </p>
+        }
         <Button 
           type='submit' 
           variant="outlined" 
