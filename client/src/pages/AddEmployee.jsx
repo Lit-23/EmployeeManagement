@@ -17,6 +17,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 
 export default function AddEmployee() {
   const [formData, setFormData] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
   const { loading, error } = useSelector((state) => state.employee);
   const [image, setImage] = useState(null);
   const [imagePercent, setImagePercent] = useState(0);
@@ -74,7 +75,7 @@ export default function AddEmployee() {
       dispatch(addEmployeeStart());
 
       // fetch to send the data from api/server
-      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/add-employee`, {
+      const res = await fetch('/api/employee/add-employee', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

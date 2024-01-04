@@ -4,14 +4,14 @@ import { addEmployee, updateEmployee, signin, signout, test, getEmployeeList, de
 
 const router = express.Router();
 
-router.get(baseURL, test);
-router.post(`${process.env.baseURL}/add-employee`, addEmployee);
-router.post(`${process.env.baseURL}/sign-in`, signin);
+router.get('/', test);
+router.post('/add-employee', addEmployee);
+router.post('/sign-in', signin);
 // router.post('/update/:id', verifyToken, updateEmployee);
-router.post(`${process.env.baseURL}/find/:id`, findEmployee);
-router.post(`${process.env.baseURL}/update/:id`, updateEmployee);
-router.get(`${process.env.baseURL}/sign-out`, signout);
-router.get(`${process.env.baseURL}/list`, getEmployeeList);
-router.delete(`${process.env.baseURL}/delete/:id`, deleteEmployee);
+router.post('/find/:id', findEmployee);
+router.post('/update/:id', updateEmployee);
+router.get('/sign-out', signout);
+router.get('/list', getEmployeeList);
+router.delete('/delete/:id', deleteEmployee);
 
 export default router;

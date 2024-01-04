@@ -12,6 +12,17 @@ import {
 import { app } from "../firebase/firebaseConfig.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Swal from "sweetalert2";
+// import BasicSelect from "../assets/mui components/selectItem.jsx";
+
+// constants
+// const gender = {
+//   id: "gender",
+//   data: ["MALE", "FEMALE"]
+// };
+// const designation = {
+//   id: "designation",
+//   data: ["Designer", "Front-end", "Back-end", "Full-stack", "Mobile-dev", "Web-dev", "Cyber-Security"]
+// };
 
 export default function EmployeeProfile() {
   const { currentUser, error } = useSelector(state => state.employee);
@@ -29,7 +40,6 @@ export default function EmployeeProfile() {
     }
   }, [image])
 
-  // functionality for uploading image in firebese storage
   const handleImageUpload = async () => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + image.name;
@@ -50,7 +60,6 @@ export default function EmployeeProfile() {
     );
   };
 
-  // functionality for updating the data
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -59,7 +68,7 @@ export default function EmployeeProfile() {
     e.preventDefault();
     try {
       dispatch(updateEmployeeStart());
-      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/update/${currentUser._id}`, {
+      const res = await fetch(`/api/employee/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
