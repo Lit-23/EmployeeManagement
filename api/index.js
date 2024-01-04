@@ -7,7 +7,7 @@ dotenv.config();
 
 import employeeRoutes from "./routes/employee.route.js"
 
-mongoose.connect(process.env.MONGO)
+mongoose.connect(`${process.env.MONGO}`)
   .then(() => {
     console.log('Connected to mongoDB')
   })
