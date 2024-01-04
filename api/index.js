@@ -3,8 +3,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 dotenv.config();
 
 import employeeRoutes from "./routes/employee.route.js"
@@ -17,23 +15,14 @@ mongoose.connect(`${process.env.MONGO}`)
     console.log(err);
 });
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 const app = express();
 
-// app.use(express.static(path.join(__dirname, '/client/dist')));
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
-// });
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
 });
 
 app.listen(3000, () => {
