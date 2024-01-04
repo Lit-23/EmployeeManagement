@@ -4,35 +4,48 @@ import { ongoingIcon, completedIcon, salaryIcon, employeeIcon } from '../assets/
 import TenureBarChart from '../components/TenureBarChart';
 import DesignationLineChart from '../components/DesignationLineChart';
 import Swal from 'sweetalert2';
+import {
+  searchEmployeeListStart,
+  searchEmployeeListSuccess,
+  searchEmployeeListFailure,
+} from '../store/employeeSlice/employeeSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Dashboard() {
   const [collection, setCollection] = useState([]);
   const [totalEmployee, setTotalEmployee] = useState(0);
-  const [totalSalary, setTotalSalary] = useState(0);
+  const { loading } = useSelector(state => state.employee);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const searchEmployee = async () => {
       try {
+        dispatch(searchEmployeeListStart());
+        if(loading === true) {
+          Swal.showLoading();
+        } else {
+          Swal.hideLoading();
+        };
         const res = await fetch('/api/employee/list', { method: 'GET' });
         const data = await res.json();
         setCollection(data);
         setTotalEmployee(data.length);
+        dispatch(searchEmployeeListSuccess(data));
       } catch (error) {
-        console.log(error);
+        dispatch(searchEmployeeListFailure(error));
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+        console.log('error fetching!');
       }
     };
     searchEmployee();
-
-    const searchSalary = () => {
-      collection.map((employee) => setTotalSalary(prev => (prev + Number(employee.salary))))
-    };
-    searchSalary();
-    
-    Swal.showLoading();
-    setTimeout(() => {
-      Swal.close();
-    }, 500);
   }, [])
+
+  const total = collection.reduce((acc, employee) => Number(acc) + Number(employee.salary), 0);
+  const avgSalary = total/totalEmployee;
 
   return (
     <section>
@@ -41,7 +54,7 @@ export default function Dashboard() {
         <DashboardCard title={'Ongoing Projects'} icon={ongoingIcon} value={5} link='/ongoing-projects'/>
         <DashboardCard title={'Completed Projects'} icon={completedIcon} value={20} link='/completed-projects'/>
         <DashboardCard title={'Employees'} icon={employeeIcon} value={totalEmployee} link='/employee-list'/>
-        <DashboardCard title={'Avg. Salary'} icon={salaryIcon} value={'$' + (totalSalary/totalEmployee).toFixed(0)}/>
+        <DashboardCard title={'Avg. Salary'} icon={salaryIcon} value={'$' + (avgSalary).toFixed(0)}/>
       </div>
 
       <div className='flex max-[769px]:flex-col justify-center gap-10 max-[769px]:gap-5'>

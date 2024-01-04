@@ -16,6 +16,9 @@ import {
   searchEmployeeByIdStart,
   searchEmployeeByIdSuccess,
   searchEmployeeByIdFailure,
+  searchEmployeeListStart,
+  searchEmployeeListSuccess,
+  searchEmployeeListFailure,
 } from '../../store/employeeSlice/employeeSlice.js'
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
@@ -43,15 +46,31 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function CustomizedTables() {
     // states & functionality for fetching data from api
   const [collection, setCollection] = useState([]);
-  const { admin } = useSelector(state  => state.employee);
+  const { admin, loading } = useSelector(state  => state.employee);
+  const dispatch = useDispatch();
   
   const searchCollection = async () => {
     try {
+      dispatch(searchEmployeeListStart());
+      if(loading === true) {
+        Swal.showLoading();
+      } else {
+        Swal.hideLoading();
+      };
       const res = await fetch('/api/employee/list', { method: 'GET' });
       const data = await res.json();
+      dispatch(searchEmployeeListSuccess(data));
       setCollection(data);
     } catch (error) {
-      console.log(error);
+      dispatch(searchEmployeeListFailure(error));
+      if(error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+      console.log('error fetching!');
     }
   };
 
@@ -76,10 +95,9 @@ export default function CustomizedTables() {
     let dataShown = collection.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     setData(dataShown);
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, collection])
 
   // functionality for deleting employee
-  const dispatch = useDispatch();
   const handleDelete = async (event) => {
     const parentElementId = event.currentTarget.parentElement.id;
     Swal.fire({

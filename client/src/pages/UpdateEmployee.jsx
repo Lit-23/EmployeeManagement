@@ -83,7 +83,7 @@ export default function EmployeeProfile() {
       dispatch(updateEmployeeSuccess(data));
       Swal.fire({
         title: "Good job!",
-        text: "Successfully updated your profile!",
+        text: `Successfully updated ${employee.firstName} data!`,
         icon: "success"
       });
     } catch (error) {

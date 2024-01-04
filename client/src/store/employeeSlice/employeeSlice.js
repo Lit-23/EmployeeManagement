@@ -85,6 +85,16 @@ const employeeSlice = createSlice({
       state.loading = false;
       state.error = false;
     },
+    searchEmployeeListStart: (state) => {
+      state.loading = true;
+    },
+    searchEmployeeListSuccess: (state) => {
+      state.loading = false;
+    },
+    searchEmployeeListFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -107,6 +117,9 @@ export const {
   deleteEmployeeSuccess,
   deleteEmployeeFailure,
   signout,
+  searchEmployeeListStart,
+  searchEmployeeListSuccess,
+  searchEmployeeListFailure,
 } = employeeSlice.actions
 
 export default employeeSlice.reducer
