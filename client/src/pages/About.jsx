@@ -7,7 +7,7 @@ export default function About() {
     <>
       <Header />
       <section className="text-xl max-[768px]:text-lg max-[640px]:text-base min-h-[85vh] p-5 mt-16 flex flex-col items-center">
-        <h1 className="font-semibold text-3xl max-[640px]:text-2xl mb-3">
+        <h1 className="font-[500] text-3xl max-[640px]:text-2xl mb-3">
           About Us
         </h1>
         <p className='max-w-[800px] flex text-center'>

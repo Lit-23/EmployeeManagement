@@ -128,6 +128,7 @@ export default function CustomizedTables() {
     });
   };
 
+  // functionality for fetching and navigating to update employee page
   const navigate = useNavigate();
   const handleEdit = async (event) => {
     const parentElementId = event.currentTarget.parentElement.id;

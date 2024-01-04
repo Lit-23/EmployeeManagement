@@ -19,7 +19,7 @@ export default function AdminLogin() {
       <Header />
       <section className="text-xl max-[768px]:text-lg max-[640px]:text-base min-h-[80vh] p-5 mt-24 flex flex-col items-center">
         <div className='w-[550px] max-[640px]:w-full'>
-          <h1 className="text-center font-semibold text-3xl max-[640px]:text-2xl mb-3">Admin Login</h1>
+          <h1 className="text-center font-[500] text-3xl max-[640px]:text-2xl mb-3">Admin Login</h1>
           <form onSubmit={handleSubmit} className='flex flex-col'>
             <label htmlFor="email" className='mx-5'>
               Email:
