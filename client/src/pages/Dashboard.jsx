@@ -26,7 +26,7 @@ export default function Dashboard() {
         } else {
           Swal.hideLoading();
         };
-        const res = await fetch('/api/employee/list', { method: 'GET' });
+        const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/list`, { method: 'GET' });
         const data = await res.json();
         setCollection(data);
         setTotalEmployee(data.length);

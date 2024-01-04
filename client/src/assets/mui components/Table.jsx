@@ -57,7 +57,7 @@ export default function CustomizedTables() {
       } else {
         Swal.hideLoading();
       };
-      const res = await fetch('/api/employee/list', { method: 'GET' });
+      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/list`, { method: 'GET' });
       const data = await res.json();
       dispatch(searchEmployeeListSuccess(data));
       setCollection(data);
@@ -111,7 +111,7 @@ export default function CustomizedTables() {
     }).then( async (result) => {
       if (result.isConfirmed) {
         dispatch(deleteEmployeeStart());
-        const res = await fetch(`/api/employee/delete/${parentElementId}`, { method: 'DELETE' });
+        const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/delete/${parentElementId}`, { method: 'DELETE' });
         const data = await res.json();
         if(res.success === false) {
           dispatch(deleteEmployeeFailure(data)); 
@@ -134,7 +134,7 @@ export default function CustomizedTables() {
     const parentElementId = event.currentTarget.parentElement.id;
     try {
       dispatch(searchEmployeeByIdStart());
-      const res = await fetch(`/api/employee/find/${parentElementId}`, { method: 'POST' })
+      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/find/${parentElementId}`, { method: 'POST' })
       const data = await res.json();
       if(res.success === false) {
         dispatch(searchEmployeeByIdFailure(data));

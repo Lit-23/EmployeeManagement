@@ -54,7 +54,6 @@ export default function BasicTabs() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box>
-        {/*  sx={{ borderBottom: 1, borderColor: 'divider' }} */}
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab name='/' label="Home" {...a11yProps(0)} />
           <Tab name='/about' label="About" {...a11yProps(1)} />
@@ -62,15 +61,6 @@ export default function BasicTabs() {
           <Tab name='/admin-login' label="Admin Login" {...a11yProps(3)} />
         </Tabs>
       </Box>
-      {/* <CustomTabPanel value={value} index={0}>
-        Home
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        About
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Employee Login
-      </CustomTabPanel> */}
     </Box>
   );
 }

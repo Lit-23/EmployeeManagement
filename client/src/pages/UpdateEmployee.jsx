@@ -40,6 +40,7 @@ export default function EmployeeProfile() {
     }
   }, [image])
 
+  // functionality for uploading image in firebese storage
   const handleImageUpload = async () => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + image.name;
@@ -60,6 +61,7 @@ export default function EmployeeProfile() {
     );
   };
 
+  // functionality for updating the data
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -68,7 +70,7 @@ export default function EmployeeProfile() {
     e.preventDefault();
     try {
       dispatch(updateEmployeeStart());
-      const res = await fetch(`/api/employee/update/${employee._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/update/${employee._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
