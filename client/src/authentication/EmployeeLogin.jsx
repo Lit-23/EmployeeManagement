@@ -23,7 +23,7 @@ export default function EmployeeLogin() {
       dispatch(signinStart());
 
       // fetch to send and get the data from api/server
-      const res = await fetch('/api/employee/sign-in', {
+      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/sign-in`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

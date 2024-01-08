@@ -4,7 +4,6 @@ import { addEmployee, updateEmployee, signin, signout, test, getEmployeeList, de
 
 const router = express.Router();
 
-router.get('/', test);
 router.post('/add-employee', addEmployee);
 router.post('/sign-in', signin);
 // router.post('/update/:id', verifyToken, updateEmployee);
