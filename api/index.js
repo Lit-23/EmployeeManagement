@@ -24,10 +24,6 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use('/', (req,res) => {
-  res.send('API is working!')
-});
-
 app.use('/api/employee', employeeRoutes);
 
 app.use((err, req, res, next) => {

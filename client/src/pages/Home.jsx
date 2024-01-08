@@ -10,9 +10,10 @@ export default function Home() {
         <div className='main'></div>
         <div className='gradient'></div>
         <h1 className="text-center font-[500] text-3xl max-[640px]:text-2xl mb-5">
-          Welcome to Litflix: <br /> Empowering Your Ideas through Innovative Software Solutions!
+          Welcome to Litflix: <br /> 
+          <span className='font-[400] text-2xl'>Empowering Your Ideas through Innovative Software Solutions!</span>
         </h1>
-        <img src="https://mander.no/img/illustration.png" alt="innovation-thumbnail" className='self-center h-[500px]'/>
+        {/* <img src="https://mander.no/img/illustration.png" alt="innovation-thumbnail" className='self-center h-[500px]'/> */}
       </section>
       <Footer />
     </>
