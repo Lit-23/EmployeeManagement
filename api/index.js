@@ -7,7 +7,7 @@ dotenv.config();
 
 import employeeRoutes from "./routes/employee.route.js"
 
-mongoose.connect(`${process.env.MONGO}`)
+mongoose.connect(process.env.MONGO)
   .then(() => {
     console.log('Connected to mongoDB')
   })
@@ -17,9 +17,17 @@ mongoose.connect(`${process.env.MONGO}`)
 
 const app = express();
 
+const whitelist = [
+  "https://employee-management-client-lyart.vercel.app/dashboard",
+  "https://employee-management-client-lyart.vercel.app/profile",
+  "https://employee-management-client-lyart.vercel.app/add-employee",
+  "https://employee-management-client-lyart.vercel.app/employee-list",
+  "https://employee-management-client-lyart.vercel.app/update"
+]
+
 app.use(cors(
   {
-    origin: ["https://employee-management-client-lyart.vercel.app"],
+    origin: whitelist,
     methods: ["POST", "GET", "DELETE"],
     credentials: true
   }
