@@ -19,8 +19,8 @@ const app = express();
 
 app.use(cors(
   {
-    origin: ["employee-management-api-two.vercel.app"],
-    methods: ["POSET", "GET", "DELETE"],
+    origin: ["https://employee-management-client-lyart.vercel.app"],
+    methods: ["POST", "GET", "DELETE"],
     credentials: true
   }
 ))
