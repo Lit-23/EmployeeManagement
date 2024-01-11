@@ -57,7 +57,7 @@ export default function EmployeeProfile() {
     e.preventDefault();
     try {
       dispatch(updateEmployeeStart());
-      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/update/${currentUser._id}`, {
+      const res = await fetch(`/api/employee/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

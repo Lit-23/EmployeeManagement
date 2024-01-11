@@ -75,7 +75,7 @@ export default function AddEmployee() {
       dispatch(addEmployeeStart());
 
       // fetch to send the data from api/server
-      const res = await fetch(`${import.meta.env.VITE_baseURL}/api/employee/add-employee`, {
+      const res = await fetch('/api/employee/add-employee', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
