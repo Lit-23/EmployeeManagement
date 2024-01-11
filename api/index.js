@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 dotenv.config(); 
 
 import employeeRoutes from "./routes/employee.route.js"
@@ -17,17 +16,10 @@ mongoose.connect(process.env.MONGO)
 
 const app = express();
 
-const whitelist = [
-  "https://employee-management-client-lyart.vercel.app/dashboard",
-  "https://employee-management-client-lyart.vercel.app/profile",
-  "https://employee-management-client-lyart.vercel.app/add-employee",
-  "https://employee-management-client-lyart.vercel.app/employee-list",
-  "https://employee-management-client-lyart.vercel.app/update"
-]
-
+const cors = require('cors');
 app.use(cors(
   {
-    origin: whitelist,
+    origin: ['https://employee-management-client-lyart.vercel.app'],
     methods: ["POST", "GET", "DELETE"],
     credentials: true
   }
